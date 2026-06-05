@@ -356,14 +356,98 @@
   @keyframes fadeSlideDown { from { opacity:0; transform:translateY(-18px);} to { opacity:1; transform:translateY(0); } }
 
   /* ─── RESPONSIVE ─────────────────────────────────────────── */
-  @media (max-width: 600px) {
-    .hero { padding: 48px 16px 36px; }
-    .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); }
+
+  /* Tablet */
+  @media (max-width: 768px) {
+    .nav-logo-img  { height: 54px; }
+    .nav-logo-text { font-size: 16px; }
+    .nav-cta       { font-size: 13px; padding: 9px 16px; }
+    .hero          { padding: 56px 16px 40px; }
+    .features      { grid-template-columns: 1fr 1fr; }
+    .stats-strip   { flex-direction: row; flex-wrap: wrap; }
+    .stat          { flex: 1 1 45%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .stat:nth-child(odd)  { border-right: 1px solid rgba(255,255,255,.12); }
+    .stat:last-child      { border-bottom: none; }
+    .stat:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .cta           { font-size: 17px; padding: 18px 32px; }
+    #gate-overlay  { padding-top: 60px; }
+    .gate-title    { font-size: 18px; }
+    .gate-sub      { font-size: 13px; }
+  }
+
+  /* Móvil */
+  @media (max-width: 480px) {
+    /* Nav: logo centrado, ocultar texto, botón pequeño */
+    .nav-inner      { padding: 10px 14px; gap: 10px; }
+    .nav-logo-text  { display: none; }
+    .nav-logo-img   { height: 44px; }
+    .nav-cta        { font-size: 12px; padding: 8px 14px; }
+
+    /* Hero */
+    .hero           { padding: 40px 14px 28px; }
+    .hero-tag       { font-size: 11px; padding: 5px 12px; }
+    .sub            { font-size: 15px; margin-bottom: 24px; }
+
+    /* Video */
+    .video-wrap     { margin-bottom: 0; }
+    .video-glow     { display: none; } /* sin glow en móvil para rendimiento */
+
+    /* Barra progreso video */
+    .vid-progress-wrap { margin: 10px 0 20px; }
+    .vid-progress-label { font-size: 11px; }
+
+    /* CTA */
+    .cta            { font-size: 15px; padding: 15px 24px; width: 100%; text-align: center; }
+    .cta-wrap       { margin: 20px 0 10px; }
+    .locked-hint    { font-size: 11px; }
+
+    /* Badges */
+    .badges         { gap: 7px; }
+    .badge          { font-size: 11px; padding: 6px 12px; }
+
+    /* Unlock banner */
+    #unlock-banner  { padding: 12px 16px; margin: 0 0 16px; }
+    #unlock-banner strong { font-size: 14px; }
+
+    /* Gate overlay */
+    #gate-overlay   { padding-top: 32px; gap: 10px; inset: -10px; }
+    .gate-lock-icon { width: 56px; height: 56px; }
+    .gate-lock-icon svg { width: 26px; height: 26px; }
+    .gate-title     { font-size: 16px; }
+    .gate-sub       { font-size: 12px; }
+    .gate-progress-wrap { width: 220px; }
+
+    /* Stats */
+    .stats-strip    { flex-direction: column; margin: 32px 0; }
+    .stat           { flex: none; width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); padding: 20px 16px; }
     .stat:last-child { border-bottom: none; }
-    .nav-logo-text { font-size: 15px; }
-    .nav-logo-img  { height: 52px; }
-    .cta { font-size: 16px; padding: 16px 28px; }
-    #gate-overlay { padding-top: 40px; }
+    .stat-num       { font-size: 36px; }
+
+    /* Features */
+    .features       { grid-template-columns: 1fr; }
+    .f              { padding: 18px; }
+
+    /* FAQ */
+    .faq details    { padding: 12px 14px; }
+    .faq summary    { font-size: 14px; }
+
+    /* Sections */
+    section         { margin: 40px 0; }
+    h2              { font-size: 20px; margin-bottom: 18px; }
+
+    /* Footer */
+    footer          { margin-top: 40px; font-size: 12px; }
+
+    /* Wrap padding */
+    .wrap           { padding: 0 14px; }
+  }
+
+  /* Muy pequeño (< 360px) */
+  @media (max-width: 360px) {
+    .nav-logo-img { height: 36px; }
+    .nav-cta      { font-size: 11px; padding: 7px 10px; }
+    .cta          { font-size: 14px; padding: 13px 18px; }
+    h1            { font-size: 22px; }
   }
 </style>
 </head>
@@ -596,10 +680,6 @@
       el.classList.add('visible');
     });
 
-    // Scroll suave al contenido
-    setTimeout(function() {
-      document.getElementById('content-gate').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 400);
   }
 
   /* ─── Scroll progress bar ───────────────────────────────── */
