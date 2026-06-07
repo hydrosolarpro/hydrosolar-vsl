@@ -679,8 +679,10 @@
 
   /* Animated counters */
   function animateCounter(el) {
-    const target = +el.dataset.target;
-    const suffix = el.dataset.suffix || '';
+    const raw = el.dataset.target;
+    const hasPlus = raw.includes('+');
+    const target = parseFloat(raw);
+    const suffix = (el.dataset.suffix || '') + (hasPlus ? '+' : '');
     const duration = 1400;
     const step = 16;
     let current = 0;
