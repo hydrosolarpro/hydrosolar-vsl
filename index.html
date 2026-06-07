@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hydrosolar_IA — Dimensiona sistemas de bombeo solar o Fotovoltaicos en 15 minutos</title>
+<title>Hydrosolar_IA — Dimensiona sistemas de bombeo solar o Sistemas fotovoltaicos en 15 minutos</title>
 <meta name="description" content="El motor de cálculo dimensiona, valida y genera reportes profesionales de bombeo solar y sistemas fotovoltaicos. Prueba el demo gratis.">
 <style>
   /* ─── TOKENS ─────────────────────────────────────────────── */
@@ -22,6 +22,7 @@
     --radius:    16px;
   }
 
+  /* ─── RESET ──────────────────────────────────────────────── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
@@ -34,8 +35,10 @@
 
   /* ─── SCROLL PROGRESS BAR ────────────────────────────────── */
   #progress-bar {
-    position: fixed; top: 0; left: 0;
-    height: 3px; width: 0%;
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
     background: linear-gradient(90deg, var(--primary-2), var(--accent));
     z-index: 1000;
     transition: width .1s linear;
@@ -44,70 +47,69 @@
 
   /* ─── STICKY NAV ─────────────────────────────────────────── */
   #topnav {
-    position: sticky; top: 0; z-index: 500;
+    position: sticky;
+    top: 0;
+    z-index: 500;
     background: rgba(246,248,252,.85);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid transparent;
     transition: border-color .3s, box-shadow .3s;
   }
-  #topnav.scrolled { border-color: var(--border); box-shadow: 0 2px 18px rgba(31,78,121,.08); }
+  #topnav.scrolled {
+    border-color: var(--border);
+    box-shadow: 0 2px 18px rgba(31,78,121,.08);
+  }
   .nav-inner {
-    max-width: 920px; margin: 0 auto;
+    max-width: 920px;
+    margin: 0 auto;
     padding: 12px 20px;
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  }
-  .nav-logo-text { font-weight: 800; font-size: 18px; color: var(--primary); letter-spacing: .4px; white-space: nowrap; }
-  .nav-logo-text span { color: var(--accent); }
-  .nav-logo-img { height: 70px; width: auto; object-fit: contain; display: block; }
-  .nav-cta {
-    display: inline-block;
-    background: var(--accent); color: #111;
-    font-weight: 800; font-size: 14px;
-    padding: 10px 22px; border-radius: 999px;
-    text-decoration: none;
-    box-shadow: 0 4px 14px rgba(255,176,0,.35);
-    transition: transform .15s, box-shadow .15s, background .3s, color .3s;
-    white-space: nowrap;
-  }
-  .nav-cta:hover:not(.locked) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,176,0,.5); }
-
-  /* ─── LOCKED STATE ───────────────────────────────────────── */
-  .cta.locked {
-    background: linear-gradient(135deg, #d0d5dd, #b0b8c4) !important;
-    color: #777 !important;
-    cursor: not-allowed !important;
-    pointer-events: none !important;
-    box-shadow: none !important;
-    animation: none !important;
-  }
-  .cta.locked::after { display: none !important; }
-  .nav-cta.locked {
-    background: #d0d5dd !important;
-    color: #888 !important;
-    cursor: not-allowed !important;
-    pointer-events: none !important;
-    box-shadow: none !important;
-  }
-  .locked-hint {
-    font-size: 12px;
-    color: #999;
-    margin-top: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
+    justify-content: space-between;
+    gap: 16px;
   }
-  .locked-hint svg { flex-shrink: 0; }
+  .nav-logo-text {
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--primary);
+    letter-spacing: .4px;
+    white-space: nowrap;
+  }
+  .nav-logo-text span { color: var(--accent); }
+  .nav-logo-img {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+  .nav-cta {
+    display: inline-block;
+    background: var(--accent);
+    color: #111;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(255,176,0,.35);
+    transition: transform .15s, box-shadow .15s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,176,0,.5); }
 
   /* ─── HERO ───────────────────────────────────────────────── */
   .hero {
-    position: relative; overflow: hidden;
-    padding: 72px 20px 56px; text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 72px 20px 56px;
+    text-align: center;
   }
+  /* animated gradient mesh background */
   .hero::before {
     content: "";
-    position: absolute; inset: -60px;
+    position: absolute;
+    inset: -60px;
     background:
       radial-gradient(ellipse 70% 55% at 20% 30%, rgba(46,117,182,.13) 0%, transparent 70%),
       radial-gradient(ellipse 60% 50% at 80% 70%, rgba(255,176,0,.10) 0%, transparent 70%),
@@ -116,49 +118,77 @@
     z-index: 0;
   }
   @keyframes meshShift {
-    0%   { transform: scale(1) rotate(0deg); }
+    0%   { transform: scale(1)    rotate(0deg); }
     100% { transform: scale(1.08) rotate(2deg); }
   }
-  .orb { position: absolute; border-radius: 50%; filter: blur(48px); opacity: .18; animation: floatOrb linear infinite; pointer-events: none; }
+  /* floating orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(48px);
+    opacity: .18;
+    animation: floatOrb linear infinite;
+    pointer-events: none;
+  }
   .orb-1 { width:340px; height:340px; background:var(--primary-2); top:-80px; left:-100px; animation-duration:14s; }
-  .orb-2 { width:260px; height:260px; background:var(--accent); bottom:-60px; right:-80px; animation-duration:11s; animation-delay:-4s; }
-  .orb-3 { width:180px; height:180px; background:var(--primary); top:30%; left:60%; animation-duration:17s; animation-delay:-8s; }
+  .orb-2 { width:260px; height:260px; background:var(--accent);    bottom:-60px; right:-80px; animation-duration:11s; animation-delay:-4s; }
+  .orb-3 { width:180px; height:180px; background:var(--primary);   top:30%;  left:60%;  animation-duration:17s; animation-delay:-8s; }
   @keyframes floatOrb {
-    0%  { transform: translateY(0) translateX(0); }
+    0%  { transform: translateY(0)   translateX(0); }
     33% { transform: translateY(-24px) translateX(14px); }
-    66% { transform: translateY(16px) translateX(-10px); }
-    100%{ transform: translateY(0) translateX(0); }
+    66% { transform: translateY(16px)  translateX(-10px); }
+    100%{ transform: translateY(0)   translateX(0); }
   }
   .hero-content { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; }
   .hero-tag {
     display: inline-block;
-    background: rgba(31,78,121,.09); color: var(--primary);
-    border: 1px solid rgba(31,78,121,.18); border-radius: 999px;
-    padding: 6px 16px; font-size: 13px; font-weight: 700; letter-spacing: .4px;
+    background: rgba(31,78,121,.09);
+    color: var(--primary);
+    border: 1px solid rgba(31,78,121,.18);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .4px;
     margin-bottom: 20px;
     animation: fadeSlideDown .6s ease both;
   }
   h1 {
-    font-size: clamp(28px, 4.4vw, 48px); line-height: 1.12;
-    color: var(--primary); font-weight: 900; margin-bottom: 18px;
+    font-size: clamp(28px, 4.4vw, 48px);
+    line-height: 1.12;
+    color: var(--primary);
+    font-weight: 900;
+    margin-bottom: 18px;
     animation: fadeSlideUp .7s .1s ease both;
   }
-  h1 .hl { background: linear-gradient(180deg, transparent 58%, #FFE49A 58%); padding: 0 4px; }
+  h1 .hl {
+    position: relative;
+    display: inline;
+    background: linear-gradient(180deg, transparent 58%, #FFE49A 58%);
+    padding: 0 4px;
+  }
   .sub {
-    font-size: clamp(16px, 2.2vw, 20px); color: var(--muted);
-    max-width: 660px; margin: 0 auto 36px;
+    font-size: clamp(16px, 2.2vw, 20px);
+    color: var(--muted);
+    max-width: 660px;
+    margin: 0 auto 36px;
     animation: fadeSlideUp .7s .2s ease both;
   }
 
   /* ─── VIDEO ──────────────────────────────────────────────── */
   .video-wrap {
-    position: relative; max-width: 820px; margin: 0 auto 0;
+    position: relative;
+    max-width: 820px;
+    margin: 0 auto 40px;
     animation: fadeSlideUp .8s .3s ease both;
   }
   .video-glow {
-    position: absolute; inset: -8px; border-radius: 22px;
+    position: absolute;
+    inset: -8px;
+    border-radius: 22px;
     background: linear-gradient(135deg, rgba(46,117,182,.25), rgba(255,176,0,.20));
-    filter: blur(18px); z-index: 0;
+    filter: blur(18px);
+    z-index: 0;
     animation: glowPulse 3.5s ease-in-out infinite;
   }
   @keyframes glowPulse {
@@ -166,167 +196,160 @@
     50%       { opacity: 1;  transform: scale(1.015); }
   }
   .video {
-    position: relative; z-index: 1;
-    background: #000; border-radius: 18px; overflow: hidden;
-    box-shadow: var(--shadow-lg); aspect-ratio: 16/9;
+    position: relative;
+    z-index: 1;
+    background: #000;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 16/9;
     border: 1px solid rgba(255,255,255,.3);
   }
-  #yt-iframe { width: 100%; height: 100%; display: block; }
+  .video video {
+    width: 100%; height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #000;
+  }
 
-  /* ─── VIDEO PROGRESS ─────────────────────────────────────── */
-  .vid-progress-wrap {
-    position: relative; z-index: 1;
-    max-width: 820px; margin: 12px auto 32px;
-    background: rgba(31,78,121,.08);
-    border-radius: 999px; height: 6px; overflow: hidden;
-  }
-  #vid-progress-bar {
-    height: 100%; width: 0%;
-    background: linear-gradient(90deg, var(--primary-2), var(--accent));
-    border-radius: 999px;
-    transition: width .5s linear;
-  }
-  .vid-progress-label {
-    text-align: center; margin-top: 8px;
-    font-size: 12px; color: var(--muted);
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  #vid-pct { font-weight: 700; color: var(--primary-2); }
-
-  /* ─── CTA ────────────────────────────────────────────────── */
+  /* ─── CTA BUTTON ─────────────────────────────────────────── */
   .cta-wrap { text-align: center; margin: 32px 0 14px; }
   .cta {
     display: inline-block;
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    color: #111; font-weight: 900; font-size: 19px;
-    padding: 20px 42px; border-radius: 999px;
+    color: #111;
+    font-weight: 900;
+    font-size: 19px;
+    padding: 20px 42px;
+    border-radius: 999px;
     text-decoration: none;
-    box-shadow: 0 8px 28px rgba(255,176,0,.45);
-    transition: transform .18s ease, box-shadow .18s ease, background .4s ease, color .4s ease;
+    box-shadow: 0 8px 28px rgba(255,176,0,.45), 0 0 0 0 rgba(255,176,0,.4);
+    transition: transform .18s ease, box-shadow .18s ease;
     animation: ctaPulse 2.8s ease-in-out infinite;
-    position: relative; overflow: hidden;
+    position: relative;
+    overflow: hidden;
   }
   .cta::after {
     content: "";
-    position: absolute; inset: 0;
-    background: linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.35) 50%, rgba(255,255,255,0) 70%);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255,255,255,.0) 30%, rgba(255,255,255,.35) 50%, rgba(255,255,255,.0) 70%);
     transform: translateX(-100%);
     transition: transform .5s ease;
   }
-  .cta:hover:not(.locked)::after { transform: translateX(100%); }
-  .cta:hover:not(.locked) {
+  .cta:hover::after { transform: translateX(100%); }
+  .cta:hover {
     transform: translateY(-2px) scale(1.02);
     box-shadow: 0 14px 36px rgba(255,176,0,.55), 0 0 0 6px rgba(255,176,0,.12);
     animation: none;
   }
   @keyframes ctaPulse {
-    0%, 100% { box-shadow: 0 8px 28px rgba(255,176,0,.45), 0 0 0 0 rgba(255,176,0,.0); }
+    0%, 100% { box-shadow: 0 8px 28px rgba(255,176,0,.45), 0 0 0 0   rgba(255,176,0,.0); }
     50%       { box-shadow: 0 8px 28px rgba(255,176,0,.45), 0 0 0 10px rgba(255,176,0,.0); }
   }
   .cta-hint { font-size: 13px; color: var(--muted); margin-top: 12px; }
 
-  /* ─── UNLOCK BANNER ──────────────────────────────────────── */
-  #unlock-banner {
-    display: none;
-    background: linear-gradient(135deg, #d4edda, #c3e6cb);
-    border: 1px solid #28a745;
-    border-radius: 12px;
-    padding: 16px 24px;
-    text-align: center;
-    margin: 0 auto 24px;
-    max-width: 820px;
-    animation: fadeSlideUp .5s ease both;
-  }
-  #unlock-banner strong { color: #155724; font-size: 16px; }
-  #unlock-banner p { color: #1e7e34; font-size: 13px; margin-top: 4px; }
-
-  /* ─── CONTENT GATE ───────────────────────────────────────── */
-  #content-gate {
-    position: relative;
-  }
-  #gate-overlay {
-    position: absolute;
-    inset: -20px;
-    z-index: 200;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    background: rgba(246,248,252,.80);
-    border-radius: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 80px;
-    gap: 14px;
-    transition: opacity .7s ease;
-  }
-  #gate-overlay.unlocked { opacity: 0; pointer-events: none; }
-  .gate-lock-icon {
-    width: 72px; height: 72px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-2));
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 28px rgba(31,78,121,.3);
-    animation: lockPulse 2s ease-in-out infinite;
-  }
-  @keyframes lockPulse {
-    0%, 100% { transform: scale(1); }
-    50%       { transform: scale(1.06); }
-  }
-  .gate-lock-icon svg { width: 34px; height: 34px; fill: #fff; }
-  .gate-title { font-size: 20px; font-weight: 800; color: var(--primary); text-align: center; padding: 0 20px; }
-  .gate-sub { font-size: 14px; color: var(--muted); text-align: center; max-width: 340px; padding: 0 20px; }
-  .gate-progress-wrap {
-    width: 280px; background: rgba(31,78,121,.1);
-    border-radius: 999px; height: 8px; overflow: hidden; margin-top: 4px;
-  }
-  #gate-progress-bar {
-    height: 100%; width: 0%;
-    background: linear-gradient(90deg, var(--primary-2), var(--accent));
-    border-radius: 999px;
-    transition: width .5s linear;
-  }
-  #gate-pct { font-size: 13px; font-weight: 700; color: var(--primary-2); }
-
   /* ─── BADGES ─────────────────────────────────────────────── */
-  .badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
   .badge {
-    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
-    padding: 8px 16px; font-size: 13px; color: var(--text);
-    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     box-shadow: 0 2px 8px rgba(31,78,121,.06);
     transition: transform .2s, box-shadow .2s, border-color .2s;
   }
-  .badge:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(31,78,121,.12); border-color: var(--primary-2); }
+  .badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(31,78,121,.12);
+    border-color: var(--primary-2);
+  }
   .badge::before { content: "✓"; color: #2e7d32; font-weight: 900; font-size: 14px; }
 
-  /* ─── STATS STRIP ────────────────────────────────────────── */
+  /* ─── COUNTER STRIP ──────────────────────────────────────── */
   .stats-strip {
-    display: flex; flex-wrap: wrap; gap: 0; justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    justify-content: center;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
-    border-radius: var(--radius); margin: 56px 0;
-    overflow: hidden; box-shadow: var(--shadow-lg);
+    border-radius: var(--radius);
+    margin: 56px 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
   }
-  .stat { flex: 1 1 180px; padding: 32px 20px; text-align: center; color: #fff; border-right: 1px solid rgba(255,255,255,.12); }
+  .stat {
+    flex: 1 1 180px;
+    padding: 32px 20px;
+    text-align: center;
+    color: #fff;
+    border-right: 1px solid rgba(255,255,255,.12);
+    position: relative;
+  }
   .stat:last-child { border-right: none; }
-  .stat-num { font-size: clamp(32px, 4vw, 46px); font-weight: 900; color: var(--accent); display: block; line-height: 1; margin-bottom: 6px; }
+  .stat-num {
+    font-size: clamp(32px, 4vw, 46px);
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
   .stat-label { font-size: 13px; color: rgba(255,255,255,.75); font-weight: 500; }
 
-  /* ─── LAYOUT ─────────────────────────────────────────────── */
+  /* ─── SECTIONS / LAYOUT ──────────────────────────────────── */
   .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
   section { margin: 64px 0; }
-  h2 { color: var(--primary); font-size: clamp(22px, 3vw, 32px); font-weight: 800; margin: 0 0 28px; position: relative; display: inline-block; }
-  h2::after { content: ""; display: block; width: 48px; height: 4px; background: linear-gradient(90deg, var(--accent), transparent); border-radius: 2px; margin-top: 8px; }
+  h2 {
+    color: var(--primary);
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 800;
+    margin: 0 0 28px;
+    position: relative;
+    display: inline-block;
+  }
+  h2::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius: 2px;
+    margin-top: 8px;
+  }
 
   /* ─── FEATURE CARDS ──────────────────────────────────────── */
   .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
   .f {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 24px; box-shadow: var(--shadow);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-    position: relative; overflow: hidden;
+    position: relative;
+    overflow: hidden;
   }
-  .f::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--primary-2), var(--accent)); opacity: 0; transition: opacity .25s; }
+  .f::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-2), var(--accent));
+    opacity: 0;
+    transition: opacity .25s;
+  }
   .f:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--primary-2); }
   .f:hover::before { opacity: 1; }
   .f-icon { font-size: 30px; margin-bottom: 12px; display: block; }
@@ -334,21 +357,55 @@
   .f p  { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
 
   /* ─── FAQ ────────────────────────────────────────────────── */
-  .faq details { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; transition: box-shadow .2s; }
+  .faq details {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    transition: box-shadow .2s;
+  }
   .faq details[open] { box-shadow: 0 4px 20px rgba(31,78,121,.09); border-color: var(--primary-2); }
-  .faq summary { cursor: pointer; font-weight: 700; color: var(--primary); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--primary);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
   .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: "+"; font-size: 22px; font-weight: 400; color: var(--primary-2); transition: transform .25s; flex-shrink: 0; }
+  .faq summary::after {
+    content: "+";
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--primary-2);
+    transition: transform .25s;
+    flex-shrink: 0;
+  }
   .faq details[open] summary::after { transform: rotate(45deg); }
   .faq p { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; }
 
   /* ─── FOOTER ─────────────────────────────────────────────── */
-  footer { border-top: 1px solid var(--border); margin-top: 72px; padding: 28px 0; text-align: center; color: var(--muted); font-size: 13px; }
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 72px;
+    padding: 28px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
   footer a { color: var(--primary-2); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
   /* ─── SCROLL REVEAL ──────────────────────────────────────── */
-  .reveal { opacity: 0; transform: translateY(32px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* ─── KEYFRAMES ──────────────────────────────────────────── */
@@ -356,111 +413,35 @@
   @keyframes fadeSlideDown { from { opacity:0; transform:translateY(-18px);} to { opacity:1; transform:translateY(0); } }
 
   /* ─── RESPONSIVE ─────────────────────────────────────────── */
-
-  /* Tablet */
-  @media (max-width: 768px) {
-    .nav-logo-img  { height: 54px; }
-    .nav-logo-text { font-size: 16px; }
-    .nav-cta       { font-size: 13px; padding: 9px 16px; }
-    .hero          { padding: 56px 16px 40px; }
-    .features      { grid-template-columns: 1fr 1fr; }
-    .stats-strip   { flex-direction: row; flex-wrap: wrap; }
-    .stat          { flex: 1 1 45%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); }
-    .stat:nth-child(odd)  { border-right: 1px solid rgba(255,255,255,.12); }
-    .stat:last-child      { border-bottom: none; }
-    .stat:nth-last-child(2):nth-child(odd) { border-bottom: none; }
-    .cta           { font-size: 17px; padding: 18px 32px; }
-    #gate-overlay  { padding-top: 60px; }
-    .gate-title    { font-size: 18px; }
-    .gate-sub      { font-size: 13px; }
-  }
-
-  /* Móvil */
-  @media (max-width: 480px) {
-    /* Nav: logo centrado, ocultar texto, botón pequeño */
-    .nav-inner      { padding: 10px 14px; gap: 10px; }
-    .nav-logo-text  { display: none; }
-    .nav-logo-img   { height: 44px; }
-    .nav-cta        { font-size: 12px; padding: 8px 14px; }
-
-    /* Hero */
-    .hero           { padding: 40px 14px 28px; }
-    .hero-tag       { font-size: 11px; padding: 5px 12px; }
-    .sub            { font-size: 15px; margin-bottom: 24px; }
-
-    /* Video */
-    .video-wrap     { margin-bottom: 0; }
-    .video-glow     { display: none; } /* sin glow en móvil para rendimiento */
-
-    /* Barra progreso video */
-    .vid-progress-wrap { margin: 10px 0 20px; }
-    .vid-progress-label { font-size: 11px; }
-
-    /* CTA */
-    .cta            { font-size: 15px; padding: 15px 24px; width: 100%; text-align: center; }
-    .cta-wrap       { margin: 20px 0 10px; }
-    .locked-hint    { font-size: 11px; }
-
-    /* Badges */
-    .badges         { gap: 7px; }
-    .badge          { font-size: 11px; padding: 6px 12px; }
-
-    /* Unlock banner */
-    #unlock-banner  { padding: 12px 16px; margin: 0 0 16px; }
-    #unlock-banner strong { font-size: 14px; }
-
-    /* Gate overlay */
-    #gate-overlay   { padding-top: 32px; gap: 10px; inset: -10px; }
-    .gate-lock-icon { width: 56px; height: 56px; }
-    .gate-lock-icon svg { width: 26px; height: 26px; }
-    .gate-title     { font-size: 16px; }
-    .gate-sub       { font-size: 12px; }
-    .gate-progress-wrap { width: 220px; }
-
-    /* Stats */
-    .stats-strip    { flex-direction: column; margin: 32px 0; }
-    .stat           { flex: none; width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); padding: 20px 16px; }
+  @media (max-width: 600px) {
+    .hero { padding: 48px 16px 36px; }
+    .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); }
     .stat:last-child { border-bottom: none; }
-    .stat-num       { font-size: 36px; }
-
-    /* Features */
-    .features       { grid-template-columns: 1fr; }
-    .f              { padding: 18px; }
-
-    /* FAQ */
-    .faq details    { padding: 12px 14px; }
-    .faq summary    { font-size: 14px; }
-
-    /* Sections */
-    section         { margin: 40px 0; }
-    h2              { font-size: 20px; margin-bottom: 18px; }
-
-    /* Footer */
-    footer          { margin-top: 40px; font-size: 12px; }
-
-    /* Wrap padding */
-    .wrap           { padding: 0 14px; }
+    .nav-logo-text { font-size: 15px; }
+    .nav-logo-img  { height: 52px; }
+    .cta { font-size: 16px; padding: 16px 28px; }
   }
 
-  /* Muy pequeño (< 360px) */
-  @media (max-width: 360px) {
-    .nav-logo-img { height: 36px; }
-    .nav-cta      { font-size: 11px; padding: 7px 10px; }
-    .cta          { font-size: 14px; padding: 13px 18px; }
-    h1            { font-size: 22px; }
-  }
+  /* Play button hover */
+  #yt-thumb:hover #play-btn { transform: translate(-50%,-50%) scale(1.12); background: rgba(255,176,0,1); }
 </style>
 </head>
 <body>
 
+<!-- SCROLL PROGRESS BAR -->
 <div id="progress-bar"></div>
 
-<!-- NAV -->
+<!-- STICKY NAV -->
 <nav id="topnav">
   <div class="nav-inner">
     <span class="nav-logo-text">Hydrosolar<span>_IA</span></span>
-    <img class="nav-logo-img" src="logo.png" alt="Logo Hydrosolar IA" onerror="this.style.display='none'">
-    <a class="nav-cta locked" id="nav-cta-btn" href="https://hidrosolaria.vercel.app/">Probar demo gratis →</a>
+    <img
+      class="nav-logo-img"
+      src="logo.png"
+      alt="Logo Hydrosolar IA"
+      onerror="this.style.display='none'"
+    >
+    <a class="nav-cta" href="https://hidrosolaria.vercel.app/">Probar demo gratis →</a>
   </div>
 </nav>
 
@@ -472,37 +453,62 @@
   <div class="hero-content">
     <div class="hero-tag">⚡ Software de ingeniería solar · Demo gratuito</div>
     <h1>Dimensiona un sistema de <span class="hl">bombeo solar o fotovoltaico</span> profesional en 15 minutos, no en medio día.</h1>
-    <p class="sub">Mira el video completo para desbloquear el acceso al demo gratuito.</p>
+    <p class="sub">Mira este video de 6 minutos para más información sobre Hydrosolar IA.</p>
 
     <!-- VIDEO VSL -->
     <div class="video-wrap">
       <div class="video-glow"></div>
-      <div class="video">
-        <div id="yt-iframe"></div>
+      <div class="video" id="yt-player">
+        <!-- Thumbnail clicable — al hacer clic intenta cargar el embed; si falla, abre YouTube -->
+        <a
+          href="https://www.youtube.com/watch?v=KYmRWktUY-M"
+          target="_blank"
+          rel="noopener"
+          id="yt-thumb"
+          onclick="loadYT(event)"
+          style="display:block;width:100%;height:100%;position:relative;cursor:pointer;"
+        >
+          <!-- Thumbnail de YouTube (maxres → hq fallback) -->
+          <img
+            id="yt-img"
+            src="https://img.youtube.com/vi/KYmRWktUY-M/maxresdefault.jpg"
+            alt="Ver video Hydrosolar IA"
+            onerror="this.src='https://img.youtube.com/vi/KYmRWktUY-M/hqdefault.jpg'"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+          >
+          <!-- Overlay degradado -->
+          <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.1) 60%,transparent 100%);"></div>
+          <!-- Botón play -->
+          <div id="play-btn" style="
+            position:absolute;top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            width:82px;height:82px;
+            background:rgba(255,176,0,.92);
+            border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            box-shadow:0 8px 32px rgba(0,0,0,.45);
+            transition:transform .2s,background .2s;
+          ">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="#111"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <!-- Etiqueta duración -->
+          <span style="
+            position:absolute;bottom:16px;left:50%;transform:translateX(-50%);
+            background:rgba(0,0,0,.72);color:#fff;
+            font-size:13px;font-weight:700;letter-spacing:.3px;
+            padding:5px 14px;border-radius:999px;
+            white-space:nowrap;
+          ">▶ Ver video completo en YouTube</span>
+        </a>
       </div>
     </div>
 
-    <!-- BARRA DE PROGRESO DEL VIDEO -->
-    <div class="vid-progress-wrap">
-      <div id="vid-progress-bar"></div>
-    </div>
-    <div class="vid-progress-label">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Video visto: <span id="vid-pct">0%</span>
-      <span id="vid-status" style="color:#aaa;">— mira el video completo para desbloquear</span>
-    </div>
-
-    <!-- CTA BLOQUEADO -->
     <div class="cta-wrap">
-      <a class="cta locked" id="main-cta" href="https://hidrosolaria.vercel.app/">Probar el demo gratis →</a>
-      <div class="locked-hint" id="locked-hint">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Se activa al terminar el video
-      </div>
-      <div class="cta-hint" id="cta-hint-main" style="display:none;">Sin tarjeta · Acceso inmediato · 15 minutos para dimensionar tu primer proyecto</div>
-      <div class="badges" style="margin-top:20px;">
+      <a class="cta" href="https://hidrosolaria.vercel.app/">Probar el demo gratis →</a>
+      <div class="cta-hint">Sin tarjeta · Acceso inmediato · 15 minutos para dimensionar tu primer proyecto</div>
+      <div class="badges">
         <div class="badge">Reportes profesionales con tu marca</div>
-        <div class="badge">Verificación de cálculos técnicos con IA</div>
+        <div class="badge">Verificaciones de cálculos técnicos y verificación con IA</div>
         <div class="badge">Análisis financiero (VAN, TIR, ROI, PAYBACK)</div>
         <div class="badge">Gestión de proyectos</div>
       </div>
@@ -510,235 +516,206 @@
   </div>
 </section>
 
-<!-- BANNER DE DESBLOQUEO (oculto al inicio) -->
+<!-- STATS STRIP -->
 <div class="wrap">
-  <div id="unlock-banner">
-    <strong>🎉 ¡Video completado! Contenido desbloqueado.</strong>
-    <p>Ya puedes acceder al demo gratuito y ver toda la información de Hydrosolar IA.</p>
+  <div class="stats-strip reveal">
+    <div class="stat">
+      <span class="stat-num" data-target="15">0</span>
+      <span class="stat-label">minutos por dimensionamiento</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="25+">0</span>
+      <span class="stat-label">años de experiencia del creador</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="100" data-suffix="%">0</span>
+      <span class="stat-label">verificación técnica + IA</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="3">0</span>
+      <span class="stat-label">planes desde instalador a empresa</span>
+    </div>
   </div>
-</div>
 
-<!-- CONTENIDO BLOQUEADO -->
-<div class="wrap">
-  <div id="content-gate">
-
-    <!-- OVERLAY DE BLOQUEO -->
-    <div id="gate-overlay">
-      <div class="gate-lock-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+  <!-- FEATURES -->
+  <section>
+    <h2 class="reveal">Lo que hace Hydrosolar_IA</h2>
+    <div class="features">
+      <div class="f reveal">
+        <span class="f-icon">⚙️</span>
+        <h3>1. Dimensionado completo</h3>
+        <p>Hidráulico, eléctrico y fotovoltaico a partir de los datos del proyecto. Sin plantillas manuales de Excel.</p>
       </div>
-      <div class="gate-title">Contenido bloqueado</div>
-      <div class="gate-sub">Mira el video completo para desbloquear toda la información y el acceso al demo.</div>
-      <div class="gate-progress-wrap">
-        <div id="gate-progress-bar"></div>
+      <div class="f reveal">
+        <span class="f-icon">🤖</span>
+        <h3>2. Verificaciones técnicas y acompañamiento con IA</h3>
+        <p>Cada módulo realiza verificaciones técnicas. La IA revisa los cálculos y alerta inconsistencias antes de que lleguen a obra.</p>
       </div>
-      <span id="gate-pct">0% visto</span>
+      <div class="f reveal">
+        <span class="f-icon">📄</span>
+        <h3>3. Reportes profesionales</h3>
+        <p>Documento técnico para ti y propuesta comercial para tu cliente, ambos con tu marca, automáticos.</p>
+      </div>
+      <div class="f reveal">
+        <span class="f-icon">📊</span>
+        <h3>4. Análisis financiero</h3>
+        <p>Payback, TIR, ahorro proyectado. Vendes valor, no precio.</p>
+      </div>
+      <div class="f reveal">
+        <span class="f-icon">🗂️</span>
+        <h3>5. Gestión de proyectos</h3>
+        <p>Todo el ciclo del proyecto en una sola plataforma. Tu ingeniero deja de ser el cuello de botella.</p>
+      </div>
+      <div class="f reveal">
+        <span class="f-icon">🏗️</span>
+        <h3>6. Hecho por un Físico del sector</h3>
+        <p>Más de 25 años de experiencia Físico especialista en las áreas de energía renovable, bombeo solar, electrobombas, sistemas fotovoltaicos y eficiencia energética, posee un enfoque de 10+ años optimizando sistemas de bombeo solar usando energía solar y sistemas fotovoltaicos..</p>
+      </div>
     </div>
+  </section>
 
-    <!-- STATS STRIP -->
-    <div class="stats-strip reveal">
-      <div class="stat"><span class="stat-num" data-target="15">0</span><span class="stat-label">minutos por dimensionamiento</span></div>
-      <div class="stat"><span class="stat-num" data-target="30">0</span><span class="stat-label">años de experiencia del creador</span></div>
-      <div class="stat"><span class="stat-num" data-target="100" data-suffix="%">0</span><span class="stat-label">verificación técnica + IA</span></div>
-      <div class="stat"><span class="stat-num" data-target="3">0</span><span class="stat-label">planes desde instalador a empresa</span></div>
+  <!-- PARA QUIÉN ES -->
+  <section>
+    <h2 class="reveal">Para quién es</h2>
+    <div class="features">
+      <div class="f reveal">
+        <span class="f-icon">🔧</span>
+        <h3>Instaladores independientes</h3>
+        <p>1–5 personas. Quieres dimensionar rápido y entregar propuestas que cierren más proyectos.</p>
+      </div>
+      <div class="f reveal">
+        <span class="f-icon">📐</span>
+        <h3>Consultores e ingenieros</h3>
+        <p>Vendes proyectos energéticos y necesitas dejar de perder horas en planillas.</p>
+      </div>
+      <div class="f reveal">
+        <span class="f-icon">🏢</span>
+        <h3>Dueños de empresas instaladoras</h3>
+        <p>Tienes equipo de ventas y técnicos. Necesitas que ventas dimensione sin depender del ingeniero senior.</p>
+      </div>
     </div>
+  </section>
 
-    <!-- FEATURES -->
-    <section>
-      <h2 class="reveal">Lo que hace Hydrosolar_IA</h2>
-      <div class="features">
-        <div class="f reveal"><span class="f-icon">⚙️</span><h3>1. Dimensionado completo</h3><p>Hidráulico, eléctrico y fotovoltaico a partir de los datos del proyecto. Sin plantillas manuales de Excel.</p></div>
-        <div class="f reveal"><span class="f-icon">🤖</span><h3>2. Verificación técnica con IA</h3><p>Cada módulo realiza verificaciones técnicas. La IA revisa los cálculos y alerta inconsistencias antes de que lleguen a obra.</p></div>
-        <div class="f reveal"><span class="f-icon">📄</span><h3>3. Reportes profesionales</h3><p>Documento técnico para ti y propuesta comercial para tu cliente, ambos con tu marca, automáticos.</p></div>
-        <div class="f reveal"><span class="f-icon">📊</span><h3>4. Análisis financiero</h3><p>Payback, TIR, ahorro proyectado. Vendes valor, no precio.</p></div>
-        <div class="f reveal"><span class="f-icon">🗂️</span><h3>5. Gestión de proyectos</h3><p>Todo el ciclo del proyecto en una sola plataforma. Tu ingeniero deja de ser el cuello de botella.</p></div>
-        <div class="f reveal"><span class="f-icon">🏗️</span><h3>6. Hecho por un ingeniero del sector</h3><p>Más de 30 años en bombeo solar y fotovoltaico. El software que yo necesitaba al empezar.</p></div>
-      </div>
-    </section>
+  <!-- FAQ -->
+  <section class="faq reveal">
+    <h2>Preguntas frecuentes</h2>
+    <details>
+      <summary>¿Cuánto cuesta?</summary>
+      <p>Los planes (STARTER, PRO y EXPERT) se muestran en la misma sesión DEMO (gratuita por 10 días). Hay opciones desde instaladores individuales hasta empresas con equipos.</p>
+    </details>
+    <details>
+      <summary>¿Necesito tarjeta para el demo?</summary>
+      <p>No. El demo es gratuito y solo se pide tu correo profesional.</p>
+    </details>
+    <details>
+      <summary>¿Funciona para mi país?</summary>
+      <p>El motor permite ajustar parámetros locales (irradiación, normativa, costos de equipo).</p>
+    </details>
+    <details>
+      <summary>¿Reemplaza al ingeniero?</summary>
+      <p>No. Acelera su trabajo. La IA verifica pero el criterio profesional sigue siendo tuyo.</p>
+    </details>
+    <details>
+      <summary>¿Qué pasa si quiero cancelar?</summary>
+      <p>Sin permanencia. Cancelas cuando quieras desde la plataforma.</p>
+    </details>
+  </section>
 
-    <!-- PARA QUIÉN ES -->
-    <section>
-      <h2 class="reveal">Para quién es</h2>
-      <div class="features">
-        <div class="f reveal"><span class="f-icon">🔧</span><h3>Instaladores independientes</h3><p>1–5 personas. Quieres dimensionar rápido y entregar propuestas que cierren más proyectos.</p></div>
-        <div class="f reveal"><span class="f-icon">📐</span><h3>Consultores e ingenieros</h3><p>Vendes proyectos energéticos y necesitas dejar de perder horas en planillas.</p></div>
-        <div class="f reveal"><span class="f-icon">🏢</span><h3>Dueños de empresas instaladoras</h3><p>Tienes equipo de ventas y técnicos. Necesitas que ventas dimensione sin depender del ingeniero senior.</p></div>
-      </div>
-    </section>
+  <!-- SECOND CTA -->
+  <div class="cta-wrap reveal">
+    <a class="cta" href="https://hidrosolaria.vercel.app/">Probar el demo gratis →</a>
+    <div class="cta-hint">Si después del demo no es para ti, cierras la pestaña y no pierdes nada.</div>
+  </div>
 
-    <!-- FAQ -->
-    <section class="faq reveal">
-      <h2>Preguntas frecuentes</h2>
-      <details><summary>¿Cuánto cuesta?</summary><p>Los planes (STARTER, PRO y EXPERT) se muestran en la misma sesión DEMO (gratuita por 10 días). Hay opciones desde instaladores individuales hasta empresas con equipos.</p></details>
-      <details><summary>¿Necesito tarjeta para el demo?</summary><p>No. El demo es gratuito y solo se pide tu correo profesional.</p></details>
-      <details><summary>¿Funciona para mi país?</summary><p>El motor permite ajustar parámetros locales (irradiación, normativa, costos de equipo).</p></details>
-      <details><summary>¿Reemplaza al ingeniero?</summary><p>No. Acelera su trabajo. La IA verifica pero el criterio profesional sigue siendo tuyo.</p></details>
-      <details><summary>¿Qué pasa si quiero cancelar?</summary><p>Sin permanencia. Cancelas cuando quieras desde la plataforma.</p></details>
-    </section>
-
-    <!-- SECOND CTA -->
-    <div class="cta-wrap reveal">
-      <a class="cta locked" id="second-cta" href="https://hidrosolaria.vercel.app/">Probar el demo gratis →</a>
-      <div class="locked-hint" id="locked-hint-2">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Se activa al terminar el video
-      </div>
-      <div class="cta-hint" id="cta-hint-2" style="display:none;">Si después del demo no es para ti, cierras la pestaña y no pierdes nada.</div>
-    </div>
-
-    <footer>
-      Hydrosolar_IA · <a href="#aviso">Aviso de privacidad</a> · <a href="#contacto">Contacto</a>
-    </footer>
-
-  </div><!-- /#content-gate -->
+  <footer>
+    Hydrosolar_IA · <a href="#aviso">Aviso de privacidad</a> · <a href="#contacto">Contacto</a>
+  </footer>
 </div><!-- /.wrap -->
 
-<!-- YouTube IFrame API -->
-<script src="https://www.youtube.com/iframe_api"></script>
-
+<!-- ─── SCRIPTS ───────────────────────────────────────────────── -->
 <script>
-  /* ─── YouTube Player API ─────────────────────────────────── */
-  var player;
-  var videoUnlocked = false;
-  var progressTimer;
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('yt-iframe', {
-      videoId: 'KYmRWktUY-M',
-      playerVars: { rel: 0, modestbranding: 1, color: 'white', enablejsapi: 1 },
-      events: {
-        onReady:       onPlayerReady,
-        onStateChange: onPlayerStateChange
-      }
-    });
+  /* YouTube embed — intenta incrustar; si falla (Error 153) deja que el href abra YouTube */
+  function loadYT(e) {
+    e.preventDefault();
+    const player = document.getElementById('yt-player');
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/KYmRWktUY-M?autoplay=1&rel=0&modestbranding=1';
+    iframe.title = 'Hydrosolar IA VSL';
+    iframe.frameBorder = '0';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.style.cssText = 'width:100%;height:100%;display:block;';
+    /* Si el iframe falla por Error 153, abrir en YouTube */
+    iframe.addEventListener('error', () => window.open('https://www.youtube.com/watch?v=KYmRWktUY-M','_blank'));
+    player.innerHTML = '';
+    player.appendChild(iframe);
+    /* Fallback: si en 3s no cargó, abrir YouTube */
+    setTimeout(() => {
+      if (!iframe.contentWindow) window.open('https://www.youtube.com/watch?v=KYmRWktUY-M','_blank');
+    }, 3000);
   }
 
-  function onPlayerReady() {
-    progressTimer = setInterval(updateProgress, 800);
-  }
-
-  function updateProgress() {
-    if (!player || !player.getDuration || videoUnlocked) return;
-    var current  = player.getCurrentTime() || 0;
-    var duration = player.getDuration()    || 0;
-    if (duration <= 0) return;
-    var pct = Math.min(100, (current / duration) * 100);
-    var pctInt = Math.floor(pct);
-
-    // Actualizar barras de progreso
-    document.getElementById('vid-progress-bar').style.width  = pct + '%';
-    document.getElementById('gate-progress-bar').style.width = pct + '%';
-    document.getElementById('vid-pct').textContent   = pctInt + '%';
-    document.getElementById('gate-pct').textContent  = pctInt + '% visto';
-
-    // Desbloquear al llegar al 95%
-    if (pct >= 95) unlockContent();
-  }
-
-  function onPlayerStateChange(event) {
-    // Estado 0 = video terminado
-    if (event.data === YT.PlayerState.ENDED) unlockContent();
-  }
-
-  function unlockContent() {
-    if (videoUnlocked) return;
-    videoUnlocked = true;
-    clearInterval(progressTimer);
-
-    // Barras al 100%
-    document.getElementById('vid-progress-bar').style.width  = '100%';
-    document.getElementById('gate-progress-bar').style.width = '100%';
-    document.getElementById('vid-pct').textContent  = '100%';
-    document.getElementById('gate-pct').textContent = '100% visto';
-    document.getElementById('vid-status').textContent = '— ¡video completado! 🎉';
-    document.getElementById('vid-status').style.color = '#2e7d32';
-
-    // Desbloquear botones CTA
-    ['main-cta', 'second-cta'].forEach(function(id) {
-      var btn = document.getElementById(id);
-      if (btn) btn.classList.remove('locked');
-    });
-    var navCta = document.getElementById('nav-cta-btn');
-    if (navCta) navCta.classList.remove('locked');
-
-    // Mostrar hints correctos y ocultar candados
-    document.getElementById('locked-hint').style.display   = 'none';
-    document.getElementById('locked-hint-2').style.display = 'none';
-    document.getElementById('cta-hint-main').style.display = 'block';
-    document.getElementById('cta-hint-2').style.display    = 'block';
-
-    // Mostrar banner de desbloqueo
-    document.getElementById('unlock-banner').style.display = 'block';
-
-    // Quitar overlay con animación
-    var overlay = document.getElementById('gate-overlay');
-    overlay.classList.add('unlocked');
-    setTimeout(function() { overlay.style.display = 'none'; }, 750);
-
-    // Disparar reveal de elementos ocultos
-    document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
-      el.classList.add('visible');
-    });
-
-  }
-
-  /* ─── Scroll progress bar ───────────────────────────────── */
-  var bar = document.getElementById('progress-bar');
-  window.addEventListener('scroll', function() {
-    var total = document.documentElement.scrollHeight - window.innerHeight;
+  /* Progress bar */
+  const bar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
     bar.style.width = (window.scrollY / total * 100) + '%';
   }, { passive: true });
 
-  /* ─── Sticky nav ─────────────────────────────────────────── */
-  var topnav = document.getElementById('topnav');
-  window.addEventListener('scroll', function() {
-    topnav.classList.toggle('scrolled', window.scrollY > 10);
+  /* Sticky nav shadow */
+  const nav = document.getElementById('topnav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
   }, { passive: true });
 
-  /* ─── Scroll reveal ──────────────────────────────────────── */
-  var revealObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e, i) {
-      if (e.isIntersecting && videoUnlocked) {
+  /* Scroll reveal */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
         e.target.style.transitionDelay = (i * 0.07) + 's';
         e.target.classList.add('visible');
-        revealObs.unobserve(e.target);
+        observer.unobserve(e.target);
       }
     });
   }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  /* ─── Animated counters ──────────────────────────────────── */
+  /* Animated counters */
   function animateCounter(el) {
-    var target = +el.dataset.target;
-    var suffix = el.dataset.suffix || '';
-    var current = 0;
-    var increment = target / (1400 / 16);
-    var timer = setInterval(function() {
+    const raw = el.dataset.target;
+    const hasPlus = raw.includes('+');
+    const target = parseFloat(raw);
+    const suffix = (el.dataset.suffix || '') + (hasPlus ? '+' : '');
+    const duration = 1400;
+    const step = 16;
+    let current = 0;
+    const increment = target / (duration / step);
+    const timer = setInterval(() => {
       current += increment;
       if (current >= target) { current = target; clearInterval(timer); }
       el.textContent = Math.floor(current) + suffix;
-    }, 16);
+    }, step);
   }
-  var counterObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.querySelectorAll('[data-target]').forEach(animateCounter);
-        counterObs.unobserve(e.target);
+        counterObserver.unobserve(e.target);
       }
     });
   }, { threshold: 0.4 });
-  document.querySelectorAll('.stats-strip').forEach(function(el) { counterObs.observe(el); });
+  document.querySelectorAll('.stats-strip').forEach(el => counterObserver.observe(el));
 
-  /* ─── Feature cards stagger ──────────────────────────────── */
-  var cardObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e, i) {
-      if (e.isIntersecting && videoUnlocked) {
-        setTimeout(function() { e.target.classList.add('visible'); }, i * 90);
-        cardObs.unobserve(e.target);
+  /* Feature cards staggered reveal */
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 90);
+        cardObserver.unobserve(e.target);
       }
     });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.f.reveal').forEach(function(el) { cardObs.observe(el); });
+  document.querySelectorAll('.f.reveal').forEach(el => cardObserver.observe(el));
 </script>
 </body>
 </html>
