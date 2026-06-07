@@ -421,6 +421,9 @@
     .nav-logo-img  { height: 52px; }
     .cta { font-size: 16px; padding: 16px 28px; }
   }
+
+  /* Play button hover */
+  #yt-thumb:hover #play-btn { transform: translate(-50%,-50%) scale(1.12); background: rgba(255,176,0,1); }
 </style>
 </head>
 <body>
@@ -702,9 +705,6 @@
     });
   }, { threshold: 0.4 });
   document.querySelectorAll('.stats-strip').forEach(el => counterObserver.observe(el));
-
-  /* Play button hover */
-  #yt-thumb:hover #play-btn { transform:translate(-50%,-50%) scale(1.12); background:rgba(255,176,0,1); }
 
   /* Feature cards staggered reveal */
   const cardObserver = new IntersectionObserver((entries) => {
